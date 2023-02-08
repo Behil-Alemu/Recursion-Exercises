@@ -65,21 +65,51 @@ isPalindrome("tacodog")  // false
 // }
 
 function isPalindrome(str) {
-
-  
+	let len = str.length;
+	if (len <= 1) return true;
+	if (str[0] !== str[len - 1]) return false;
+	return isPalindrome(str.slice(1, -1));
 }
 
-/** findIndex: return the index of val in arr (or -1 if val is not present). */
+/** findIndex: return the index of val in arr (or -1 if val is not present). 
+findIndex(animals, "cat");  // 1
+findIndex(animals, "porcupine");   // -1
 
-function findIndex(arr, val) {}
+*/
+let animals = [ 'duck', 'cat', 'pony' ];
+function findIndex(arr, val, idx = 0) {
+	if (idx >= arr.length) return -1;
+	if (arr[idx] === val) return idx;
+	return findIndex(arr, val, idx + 1);
+}
 
-/** revString: return a copy of a string, but in reverse. */
-
-function revString(str) {}
+/** revString: return a copy of a string, but in reverse.
+ * revString("porcupine") // 'enipucrop'
+ */
+//first try
+// function revString(str, idx = 0, revStr = '') {
+// 	let len = str.length;
+// 	if (idx >= len) return revStr;
+// 	revStr += str[len - 1];
+// 	return revString(str.slice(0, -1), idx + 1, revStr);
+// }
+function revString(str, idx = 0, revStr = '') {
+	let len = str.length;
+	if (revStr.length === len) return revStr;
+	revStr += str[len - 1 - idx];
+	return revString(str, idx + 1, revStr);
+}
 
 /** gatherStrings: given an object, return an array of all of the string values. */
 
-function gatherStrings(obj) {}
+function gatherStrings(obj) {
+	let result = [];
+	for (let key in obj) {
+		if (typeof obj[key] === 'string') result.push(obj[key]);
+		if (typeof obj[key] === 'object') result.push(...gatherStrings(obj[key]));
+	}
+	return result;
+}
 
 /** binarySearch: given a sorted array of numbers, and a value,
  * return the index of that value (or -1 if val is not present). */
